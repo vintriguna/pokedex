@@ -1,3 +1,5 @@
+import AppWrapper from "./components/AppWrapper";
+import "./App.css";
 export default function App() {
-  return <h1>Hello world!</h1>;
+  return <AppWrapper />;
 }
