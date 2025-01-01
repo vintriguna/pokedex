@@ -8,8 +8,9 @@
   align-items: center;
   height: 250px;
   width: 175px;
-  background-color: aquamarine;
   /* flex-wrap: wrap; */
+  color: white;
+  border-radius: 10px;
 }
 
 .pokemonImage {

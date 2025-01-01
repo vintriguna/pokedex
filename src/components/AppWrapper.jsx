@@ -10,7 +10,7 @@ export default function AppWrapper() {
       console.log(pokemonData);
       setPokemonArr((prevArr) => [...prevArr, pokemonData]);
     } catch (error) {
-      console.error("Error while fetching data", error);
+      console.error("Error while fetching data: ", error);
     }
   }
 
