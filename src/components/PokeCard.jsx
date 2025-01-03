@@ -20,15 +20,20 @@ export default function PokeCard({ data }) {
     dark: "#9A8A8C",
     fairy: "#F5A2F5",
   };
-
-  const typeColor = data.types[0].type.name;
-  //WILL HAVE TO SUPPORT POKEMON WITH 2 TYPES.. HOW DO I SET THE BACKGROUND COLOR IN THAT CASE?
-
+  let styleTheme;
+  const typeColor1 = data.types[0].type.name;
+  if (data.types.length > 1) {
+    const typeColor2 = data.types[1].type.name;
+    styleTheme = {
+      background: `linear-gradient(to right bottom ,${pokemonTypes[typeColor1]}, ${pokemonTypes[typeColor2]})`,
+    };
+  } else {
+    styleTheme = {
+      backgroundColor: pokemonTypes[typeColor1],
+    };
+  }
   return (
-    <div
-      className="cardContainer"
-      style={{ backgroundColor: pokemonTypes[typeColor] }}
-    >
+    <div className="cardContainer" style={styleTheme}>
       <p>ID:{data.id}</p>
       <img
         className="pokemonImage"

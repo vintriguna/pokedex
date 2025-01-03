@@ -14,13 +14,42 @@ export default function AppWrapper() {
     }
   }
 
+  async function getPokemonData() {
+    //let pokemonPromises = [];
+    const pokemonList = await fetch(
+      "https://pokeapi.co/api/v2/pokemon?limit=2000"
+    );
+    const pokemonListData = await pokemonList.json();
+    const pokemonResults = pokemonListData.results;
+
+    let pokemonPromises = pokemonResults.map((obj) =>
+      fetch(obj.url).then((res) => res.json())
+    );
+
+    // for (let i = 0; i < pokemonResults.length; i++) {
+    //     const endpoint = pokemonResults[i].url;
+    //     pokemonPromises.push(fetch(endpoint));
+    // }
+
+    const allPokemonData = await Promise.all(pokemonPromises);
+    setPokemonArr(allPokemonData);
+  }
+
   useEffect(() => {
-    getData();
+    getPokemonData();
   }, []);
 
   if (pokemonArr.length === 0) {
     return <div>loading...</div>;
   }
 
-  return <PokeCard data={pokemonArr[0]} />;
+  return (
+    <div className="cardList">
+      {pokemonArr.map((pokemon) => (
+        <PokeCard data={pokemon} />
+      ))}
+    </div>
+  );
+
+  return <PokeCard data={pokemonArr[371]} />;
 }
