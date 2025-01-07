@@ -11,16 +11,20 @@ export default function SearchBar({
   setSelectedType,
 }) {
   return (
-    <div>
-      <input
-        className="pokeInput"
-        type="search"
-        placeholder="Search for a Pokemon"
-        onChange={(e) => {
-          onSearch(e.target.value);
-        }}
-      />
+    <div className="searchWrapper">
+      <div className="search">
+        <span className="searchIcon material-symbols-outlined">search</span>
+        <input
+          className="pokeInput"
+          type="search"
+          placeholder="Search"
+          onChange={(e) => {
+            onSearch(e.target.value);
+          }}
+        />
+      </div>
       <select
+        className="searchFilter"
         value={selectedType}
         onChange={(e) => setSelectedType(e.target.value)}
       >
