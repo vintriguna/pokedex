@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 export default function AppWrapper() {
   const [pokemonArr, setPokemonArr] = useState([]);
+  const [pokemonTypes, setPokemonTypes] = useState([]);
+  const [selectedType, setSelectedType] = useState("all");
   const [searchValue, setSearchValue] = useState("");
+  const [loading, setLoading] = useState(true);
 
   async function getData() {
     try {
@@ -32,25 +35,53 @@ export default function AppWrapper() {
     setPokemonArr(allPokemonData);
   }
 
+  async function getPokemonTypes() {
+    try {
+      const typeData = await fetch("https://pokeapi.co/api/v2/type/?limit=25");
+      const typeJson = await typeData.json();
+      setPokemonTypes(typeJson.results.map((type) => type.name));
+    } catch (error) {
+      console.error("Error fetching Pokémon types: ", error);
+    }
+  }
+
   function handleSearch(value) {
     setSearchValue(value.toLowerCase());
   }
 
+  async function start() {
+    await Promise.all([getPokemonData(), getPokemonTypes()]);
+    setLoading(false);
+  }
+
   useEffect(() => {
-    getPokemonData();
+    start();
   }, []);
 
-  const filteredPokemon = pokemonArr.filter((pokemon) =>
-    pokemon.name.startsWith(searchValue)
-  );
+  // const filteredPokemon = pokemonArr.filter((pokemon) =>
+  //   pokemon.name.startsWith(searchValue)
+  // );
 
-  if (pokemonArr.length === 0) {
+  const filteredPokemon = pokemonArr.filter((pokemon) => {
+    const matchesSearch = pokemon.name.toLowerCase().includes(searchValue);
+    const matchesType =
+      selectedType === "all" ||
+      pokemon.types.some((typeObj) => typeObj.type.name === selectedType);
+    return matchesSearch && matchesType;
+  });
+
+  if (loading) {
     return <div>loading...</div>;
   }
 
   return (
     <div className="contentWrapper">
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar
+        onSearch={handleSearch}
+        pokemonTypes={pokemonTypes}
+        selectedType={selectedType}
+        setSelectedType={setSelectedType}
+      />
       <div className="cardList">
         {filteredPokemon.map((pokemon) => (
           <PokeCard data={pokemon} key={pokemon.id} />
