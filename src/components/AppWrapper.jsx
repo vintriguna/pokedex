@@ -1,7 +1,9 @@
 import PokeCard from "./PokeCard";
 import React, { useEffect, useState } from "react";
+import SearchBar from "./SearchBar";
 export default function AppWrapper() {
   const [pokemonArr, setPokemonArr] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   async function getData() {
     try {
@@ -17,7 +19,7 @@ export default function AppWrapper() {
   async function getPokemonData() {
     //let pokemonPromises = [];
     const pokemonList = await fetch(
-      "https://pokeapi.co/api/v2/pokemon?limit=2000"
+      "https://pokeapi.co/api/v2/pokemon?limit=1000"
     );
     const pokemonListData = await pokemonList.json();
     const pokemonResults = pokemonListData.results;
@@ -26,30 +28,34 @@ export default function AppWrapper() {
       fetch(obj.url).then((res) => res.json())
     );
 
-    // for (let i = 0; i < pokemonResults.length; i++) {
-    //     const endpoint = pokemonResults[i].url;
-    //     pokemonPromises.push(fetch(endpoint));
-    // }
-
     const allPokemonData = await Promise.all(pokemonPromises);
     setPokemonArr(allPokemonData);
+  }
+
+  function handleSearch(value) {
+    setSearchValue(value.toLowerCase());
   }
 
   useEffect(() => {
     getPokemonData();
   }, []);
 
+  const filteredPokemon = pokemonArr.filter((pokemon) =>
+    pokemon.name.startsWith(searchValue)
+  );
+
   if (pokemonArr.length === 0) {
     return <div>loading...</div>;
   }
 
   return (
-    <div className="cardList">
-      {pokemonArr.map((pokemon) => (
-        <PokeCard data={pokemon} />
-      ))}
+    <div className="contentWrapper">
+      <SearchBar onSearch={handleSearch} />
+      <div className="cardList">
+        {filteredPokemon.map((pokemon) => (
+          <PokeCard data={pokemon} key={pokemon.id} />
+        ))}
+      </div>
     </div>
   );
-
-  return <PokeCard data={pokemonArr[371]} />;
 }
