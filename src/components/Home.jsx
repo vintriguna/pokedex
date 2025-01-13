@@ -8,19 +8,7 @@ export default function AppWrapper() {
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(true);
 
-  async function getData() {
-    try {
-      const urlData = await fetch("https://pokeapi.co/api/v2/pokemon/1/");
-      const pokemonData = await urlData.json();
-      console.log(pokemonData);
-      setPokemonArr((prevArr) => [...prevArr, pokemonData]);
-    } catch (error) {
-      console.error("Error while fetching data: ", error);
-    }
-  }
-
   async function getPokemonData() {
-    //let pokemonPromises = [];
     const pokemonList = await fetch(
       "https://pokeapi.co/api/v2/pokemon?limit=1000"
     );
@@ -57,10 +45,6 @@ export default function AppWrapper() {
   useEffect(() => {
     start();
   }, []);
-
-  // const filteredPokemon = pokemonArr.filter((pokemon) =>
-  //   pokemon.name.startsWith(searchValue)
-  // );
 
   const filteredPokemon = pokemonArr.filter((pokemon) => {
     const matchesSearch = pokemon.name.toLowerCase().includes(searchValue);

@@ -35,7 +35,7 @@ body {
 
 .cardContainer:hover {
   transform: translateY(-10px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 .pokemonImage {
@@ -109,14 +109,14 @@ body {
 }
 
 .pokeCardLabel {
-  font-family: "Bubblegum Sans", cursive;
+  font-family: "Bubblegum Sans", "Arial Rounded MT Bold", sans-serif;
   font-size: 28px;
   margin-top: auto;
   text-align: center;
 }
 
 .pokeCardId {
-  font-family: "Bubblegum Sans", cursive;
+  font-family: "Bubblegum Sans", "Arial Rounded MT Bold", sans-serif;
   font-size: 20px;
   margin-bottom: 10px;
 }
