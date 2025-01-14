@@ -2,7 +2,7 @@ function capitalizeFirstLetter(str) {
   return String(str).charAt(0).toUpperCase() + String(str).slice(1);
 }
 
-export default function PokeCard({ data }) {
+export default function PokeCard({ data, onClick }) {
   const pokemonTypes = {
     normal: "#C1C2C1",
     fighting: "#FFAC59",
@@ -37,7 +37,7 @@ export default function PokeCard({ data }) {
     };
   }
   return (
-    <div className="cardContainer" style={styleTheme}>
+    <div className="cardContainer" style={styleTheme} onClick={onClick}>
       <p className="pokeCardId">{data.id}</p>
       <img
         className="pokemonImage"

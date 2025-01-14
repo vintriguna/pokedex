@@ -1,12 +1,14 @@
 import PokeCard from "./PokeCard";
 import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
+import { useNavigate } from "react-router-dom";
 export default function AppWrapper() {
   const [pokemonArr, setPokemonArr] = useState([]);
   const [pokemonTypes, setPokemonTypes] = useState([]);
   const [selectedType, setSelectedType] = useState("all");
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   async function getPokemonData() {
     const pokemonList = await fetch(
@@ -35,6 +37,10 @@ export default function AppWrapper() {
 
   function handleSearch(value) {
     setSearchValue(value.toLowerCase());
+  }
+
+  function handlePokeCardClick(pokemon) {
+    navigate(`/pokemon/${pokemon.id}`, { state: { pokemon } });
   }
 
   async function start() {
@@ -68,7 +74,11 @@ export default function AppWrapper() {
       />
       <div className="cardList">
         {filteredPokemon.map((pokemon) => (
-          <PokeCard data={pokemon} key={pokemon.id} />
+          <PokeCard
+            data={pokemon}
+            key={pokemon.id}
+            onClick={() => handlePokeCardClick(pokemon)}
+          />
         ))}
       </div>
     </div>
