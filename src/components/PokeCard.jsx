@@ -1,8 +1,13 @@
-function capitalizeFirstLetter(str) {
+import { usePokemon } from "../providers/PokemonProvider";
+
+export function capitalizeFirstLetter(str) {
   return String(str).charAt(0).toUpperCase() + String(str).slice(1);
 }
 
-export default function PokeCard({ data, onClick }) {
+export default function PokeCard({ id, onClick }) {
+  const { pokemonArr } = usePokemon();
+  const data = pokemonArr[id - 1];
+
   const pokemonTypes = {
     normal: "#C1C2C1",
     fighting: "#FFAC59",

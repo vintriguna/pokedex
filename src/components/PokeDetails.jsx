@@ -1,40 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-
-function capitalizeFirstLetter(str) {
-  return String(str).charAt(0).toUpperCase() + String(str).slice(1);
-}
+import { capitalizeFirstLetter } from "./PokeCard";
+import { usePokemon } from "../providers/PokemonProvider";
 
 export default function PokeDetails() {
   const { id } = useParams();
-  const location = useLocation();
-  const [pokemonData, setPokemonData] = useState(location.state?.pokemon);
-  const [loading, setLoading] = useState(!location.state?.pokemon);
-
-  async function getPokemonData() {
-    try {
-      const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
-      const dataJson = await data.json();
-      setPokemonData(dataJson);
-    } catch (error) {
-      console.error("Failed to fetch Pokemon data", error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    if (!pokemonData) {
-      getPokemonData();
-    }
-  }, [pokemonData]);
+  const { pokemonArr, loading } = usePokemon();
+  const pokemonData = pokemonArr.find((pokemon) => pokemon.id === parseInt(id));
 
   if (loading) {
     return <p>Pokemon data loading...</p>;
-  }
-
-  if (!pokemonData) {
-    return <p>Unable to load Pokemon data. Please try again later.</p>;
   }
 
   return (

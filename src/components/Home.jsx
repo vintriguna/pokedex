@@ -2,55 +2,57 @@ import PokeCard from "./PokeCard";
 import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
+import { usePokemon } from "../providers/PokemonProvider";
 export default function AppWrapper() {
-  const [pokemonArr, setPokemonArr] = useState([]);
-  const [pokemonTypes, setPokemonTypes] = useState([]);
+  // const [pokemonArr, setPokemonArr] = useState([]);
+  //const [pokemonTypes, setPokemonTypes] = useState([]);
   const [selectedType, setSelectedType] = useState("all");
   const [searchValue, setSearchValue] = useState("");
-  const [loading, setLoading] = useState(true);
+  //const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  async function getPokemonData() {
-    const pokemonList = await fetch(
-      "https://pokeapi.co/api/v2/pokemon?limit=1000"
-    );
-    const pokemonListData = await pokemonList.json();
-    const pokemonResults = pokemonListData.results;
+  // async function getPokemonData() {
+  //   const pokemonList = await fetch(
+  //     "https://pokeapi.co/api/v2/pokemon?limit=1000"
+  //   );
+  //   const pokemonListData = await pokemonList.json();
+  //   const pokemonResults = pokemonListData.results;
 
-    let pokemonPromises = pokemonResults.map((obj) =>
-      fetch(obj.url).then((res) => res.json())
-    );
+  //   let pokemonPromises = pokemonResults.map((obj) =>
+  //     fetch(obj.url).then((res) => res.json())
+  //   );
 
-    const allPokemonData = await Promise.all(pokemonPromises);
-    setPokemonArr(allPokemonData);
-  }
+  //   const allPokemonData = await Promise.all(pokemonPromises);
+  //   setPokemonArr(allPokemonData);
+  // }
 
-  async function getPokemonTypes() {
-    try {
-      const typeData = await fetch("https://pokeapi.co/api/v2/type/?limit=25");
-      const typeJson = await typeData.json();
-      setPokemonTypes(typeJson.results.map((type) => type.name));
-    } catch (error) {
-      console.error("Error fetching Pokémon types: ", error);
-    }
-  }
+  // async function getPokemonTypes() {
+  //   try {
+  //     const typeData = await fetch("https://pokeapi.co/api/v2/type/?limit=25");
+  //     const typeJson = await typeData.json();
+  //     setPokemonTypes(typeJson.results.map((type) => type.name));
+  //   } catch (error) {
+  //     console.error("Error fetching Pokémon types: ", error);
+  //   }
+  // }
+  const { pokemonArr, pokemonTypes, loading } = usePokemon();
 
   function handleSearch(value) {
     setSearchValue(value.toLowerCase());
   }
 
   function handlePokeCardClick(pokemon) {
-    navigate(`/pokemon/${pokemon.id}`, { state: { pokemon } });
+    navigate(`/pokemon/${pokemon.id}`);
   }
 
-  async function start() {
-    await Promise.all([getPokemonData(), getPokemonTypes()]);
-    setLoading(false);
-  }
+  // async function start() {
+  //   await Promise.all([getPokemonData(), getPokemonTypes()]);
+  //   setLoading(false);
+  // }
 
-  useEffect(() => {
-    start();
-  }, []);
+  // useEffect(() => {
+  //   start();
+  // }, []);
 
   const filteredPokemon = pokemonArr.filter((pokemon) => {
     const matchesSearch = pokemon.name.toLowerCase().includes(searchValue);
@@ -75,7 +77,7 @@ export default function AppWrapper() {
       <div className="cardList">
         {filteredPokemon.map((pokemon) => (
           <PokeCard
-            data={pokemon}
+            id={pokemon.id}
             key={pokemon.id}
             onClick={() => handlePokeCardClick(pokemon)}
           />
