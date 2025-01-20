@@ -46,8 +46,9 @@ export default function PokeCard({ id, onClick }) {
       <p className="pokeCardId">{data.id}</p>
       <img
         className="pokemonImage"
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id}.svg`}
-        alt="a pokemon"
+        //src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id}.svg`}
+        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`}
+        alt={data.name}
       />
       <p className="pokeCardLabel">{capitalizeFirstLetter(data.name)}</p>
     </div>
