@@ -138,11 +138,6 @@ body {
 
 .detailsCard {
   /* background-color: #5d6d7e; */
-  background: linear-gradient(
-    135deg,
-    #78c850,
-    #6890f0
-  ); /* Example for Grass and Water */
   display: flex;
   flex-direction: column;
   padding: 50px;
@@ -176,10 +171,20 @@ body {
   align-items: center;
   margin: auto;
   margin-right: 20px;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4%;
+  padding: 10px;
 }
 
 .detailsInformation {
   margin-top: 20px;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 4%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
 
 .flavorText {

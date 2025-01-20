@@ -47,6 +47,40 @@ export default function PokeDetails() {
   const height = Math.round(pokemonData?.height * 0.1 * 100) / 100;
   const weight = Math.round(pokemonData?.weight * 0.1 * 100) / 100;
 
+  const pokemonTypes = {
+    normal: "#C1C2C1",
+    fighting: "#FFAC59",
+    flying: "#ADD2F5",
+    poison: "#B884DC",
+    ground: "#B78E6F",
+    rock: "#CBC7AD",
+    bug: "#B8C26A",
+    ghost: "#A284A2",
+    steel: "#99C2D1",
+    stellar: "#40B5A5",
+    fire: "#EF7373",
+    water: "#73ADF5",
+    grass: "#82C274",
+    electric: "#FCD659",
+    psychic: "#F584A7",
+    ice: "#80DFF7",
+    dragon: "#8D98EC",
+    dark: "#9A8A8C",
+    fairy: "#F5A2F5",
+  };
+  let styleTheme;
+  const typeColor1 = pokemonData?.types[0].type.name;
+  if (pokemonData?.types.length > 1) {
+    const typeColor2 = pokemonData?.types[1].type.name;
+    styleTheme = {
+      background: `linear-gradient(to right bottom ,${pokemonTypes[typeColor1]}, ${pokemonTypes[typeColor2]})`,
+    };
+  } else {
+    styleTheme = {
+      backgroundColor: pokemonTypes[typeColor1],
+    };
+  }
+
   if (loading) {
     return <p>Loading Pokémon data...</p>;
   }
@@ -61,7 +95,7 @@ export default function PokeDetails() {
 
   return (
     <div className="detailsWrapper">
-      <div className="detailsCard">
+      <div className="detailsCard" style={styleTheme}>
         <div className="detailsHeader">
           <h1 className="detailsTitle">
             {capitalizeFirstLetter(pokemonData.name)}
