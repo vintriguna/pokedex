@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { capitalizeFirstLetter } from "./PokeCard";
 import { usePokemon } from "../providers/PokemonProvider";
 
@@ -9,6 +9,7 @@ export default function PokeDetails() {
   const [speciesData, setSpeciesData] = useState(null);
   const [localLoading, setLocalLoading] = useState(true);
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   const pokemonData = pokemonArr.find((pokemon) => pokemon.id === parseInt(id));
 
@@ -31,6 +32,15 @@ export default function PokeDetails() {
 
     getSpeciesData();
   }, [id]);
+
+  function handleRedirect() {
+    navigate("/");
+  }
+
+  function handleInnerClick(e) {
+    e.stopPropagation();
+    console.log("Inner div clicked");
+  }
 
   const flavorText = speciesData
     ? speciesData.flavor_text_entries.find(
@@ -89,18 +99,18 @@ export default function PokeDetails() {
     return <h1>An error occurred. Please refresh and try again.</h1>;
   }
 
-  if (localLoading || !speciesData) {
-    return <p>Loading species data...</p>;
-  }
-
   return (
-    <div className="detailsWrapper">
-      <div className="detailsCard" style={styleTheme}>
+    <div className="detailsWrapper" onClick={handleRedirect}>
+      <div
+        className="detailsCard"
+        style={styleTheme}
+        onClick={(e) => handleInnerClick(e)}
+      >
         <div className="detailsHeader">
           <h1 className="detailsTitle">
             {capitalizeFirstLetter(pokemonData.name)}
           </h1>
-          <p className="detailsType">
+          <p className="detailsSubtitle">
             {pokemonData.types.map((type) => type.type.name).join(", ")}
           </p>
         </div>
@@ -111,10 +121,22 @@ export default function PokeDetails() {
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonData.id}.png`}
               alt={pokemonData.name}
             />
-            <p>{genus}</p>
+            {localLoading ? (
+              <div className="skeleton skeletonSubtitle"></div>
+            ) : (
+              <p className="detailsSubtitle">{genus}</p>
+            )}
           </div>
           <div className="detailsInformation">
-            <p className="flavorText">{flavorText}</p>
+            {localLoading ? (
+              <div>
+                <div className="skeleton skeletonText"></div>
+                <div className="skeleton skeletonText"></div>
+                <div className="skeleton skeletonText"></div>
+              </div>
+            ) : (
+              <p className="flavorText">{flavorText}</p>
+            )}
             <h3 className="detailsSubheader">Abilities</h3>
             <div className="abilities">
               <ul>
