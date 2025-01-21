@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { capitalizeFirstLetter } from "./PokeCard";
 import { usePokemon } from "../providers/PokemonProvider";
+import LoadingScreen from "./LoadingScreen";
 
 export default function PokeDetails() {
   const { id } = useParams();
@@ -92,7 +93,7 @@ export default function PokeDetails() {
   }
 
   if (loading) {
-    return <p>Loading Pokémon data...</p>;
+    return <LoadingScreen />;
   }
 
   if (error) {

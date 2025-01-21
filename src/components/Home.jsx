@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
 import { usePokemon } from "../providers/PokemonProvider";
+import LoadingScreen from "./LoadingScreen";
 export default function AppWrapper() {
   const [selectedType, setSelectedType] = useState("all");
   const [searchValue, setSearchValue] = useState("");
@@ -26,7 +27,7 @@ export default function AppWrapper() {
   });
 
   if (loading) {
-    return <div>loading...</div>;
+    return <LoadingScreen />;
   }
 
   return (
