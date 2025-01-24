@@ -1,9 +1,11 @@
 import PokeCard from "./PokeCard";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
 import { usePokemon } from "../providers/PokemonProvider";
 import LoadingScreen from "./LoadingScreen";
+import cloudImage from "../assets/cloud.png";
+
 export default function AppWrapper() {
   const [selectedType, setSelectedType] = useState("all");
   const [searchValue, setSearchValue] = useState("");
@@ -26,12 +28,10 @@ export default function AppWrapper() {
     return matchesSearch && matchesType;
   });
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
-
-  return (
-    <div className="contentWrapper">
+  return loading ? (
+    <LoadingScreen />
+  ) : (
+    <div className="contentWrapper" ref={containerRef}>
       <SearchBar
         onSearch={handleSearch}
         pokemonTypes={pokemonTypes}
