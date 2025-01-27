@@ -40,7 +40,6 @@ export default function PokeDetails() {
 
   function handleInnerClick(e) {
     e.stopPropagation();
-    console.log("Inner div clicked");
   }
 
   const flavorText = speciesData
@@ -50,7 +49,8 @@ export default function PokeDetails() {
     : "Loading description...";
 
   const stats = pokemonData?.stats;
-  const abilities = pokemonData?.abilities.map((obj) => obj.ability.name) || [];
+  let abilities = pokemonData?.abilities.map((obj) => obj.ability.name) || [];
+  abilities = abilities.map((ability) => ability.replace("-", " "));
   const captureRate = speciesData?.capture_rate;
   const genus = speciesData?.genera.find(
     (obj) => obj.language.name == "en"

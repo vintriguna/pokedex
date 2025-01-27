@@ -289,3 +289,29 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.clouds {
+  position: absolute;
+  width: 100%;
+  height: 100%; /* This container should cover the entire viewport */
+  z-index: -1; /* Ensure clouds are behind content */
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  left: -200px; /* Start off-screen */
+  animation: moveClouds linear infinite; /* Smooth horizontal movement */
+  opacity: 0.8; /* Slight transparency */
+  z-index: -1; /* Ensure clouds are behind everything */
+}
+
+/* Animation for cloud movement */
+@keyframes moveClouds {
+  0% {
+    transform: translateX(-200px); /* Start off-screen to the left */
+  }
+  100% {
+    transform: translateX(120vw); /* Move off-screen to the right */
+  }
+}
