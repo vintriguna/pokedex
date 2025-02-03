@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { capitalizeFirstLetter } from "./PokeCard";
 import { usePokemon } from "../providers/PokemonProvider";
 import LoadingScreen from "./LoadingScreen";
+import AboutDescription from "./AboutDescription";
 
 export default function PokeDetails() {
   const { id } = useParams();
