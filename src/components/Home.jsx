@@ -103,6 +103,9 @@ export default function AppWrapper() {
           />
         ))}
       </div>
+      {filteredPokemon.length == 0 && (
+        <p className="noPokemonLabel">No pokémon found!</p>
+      )}
       <AboutDescription />
     </div>
   );

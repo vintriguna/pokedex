@@ -11,11 +11,17 @@ export default function AboutDescription() {
       </h4>
       <h4 className="aboutParagraph">
         Data provided via{" "}
-        <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">
+        <a
+          className="link"
+          href="https://pokeapi.co/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           PokéAPI
         </a>
-        . Cloud sprites courtesy of{" "}
+        . Cloud sprite courtesy of{" "}
         <a
+          className="link"
           href="https://opengameart.org/users/rrcaseyr"
           target="_blank"
           rel="noopener noreferrer"
