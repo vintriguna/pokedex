@@ -147,15 +147,20 @@ body {
   background-color: #77d2ff;
   /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
   font-family: "Bubblegum Sans";
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
+  padding: 10px;
 }
 
 .detailsCard {
   /* background-color: #5d6d7e; */
   display: flex;
   flex-direction: column;
-  padding: 50px;
+  padding: 5vw;
   border-radius: 4.5%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -358,8 +363,9 @@ body {
 /* responsive css */
 
 @media (max-width: 900px) {
-  .detailsCard {
-    margin-top: 40%;
+  .detailsWrapper {
+    margin-top: 10%;
+    margin-bottom: 10%;
   }
 
   .detailsSecond {
@@ -372,5 +378,39 @@ body {
 
   .detailsImageContainer {
     margin: auto;
+  }
+}
+
+@media (max-width: 590px) {
+  .detailsCard {
+    border-radius: 5vh;
+  }
+
+  .flavorText {
+    width: 70vw;
+    font-size: 1.2rem;
+  }
+
+  .abilitiesItem {
+    display: inline;
+    margin: 0px 5px;
+    font-size: 1.2rem;
+  }
+
+  .stats {
+    display: flex;
+    width: 95%;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+  }
+
+  .statParagraph {
+    margin: 10px 0px;
+    font-size: 1.2rem;
+  }
+
+  .detailsSubheader {
+    font-size: 1.8rem;
   }
 }
